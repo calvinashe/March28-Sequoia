@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sequoia — Grow Through Every Semester</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green-deep:#2D5016;--green-mid:#4A7C2E;--green-light:#6BAF3D;--green-pale:#E8F0E0;--cream:#FAF6F0;--brown-trunk:#6B4423;--orange-warm:#D4882B;--red-accent:#C75B3A;--text-dark:#2A2A24;--text-mid:#5C5C52;--text-light:#8A8A7E;--shadow-soft:0 2px 16px rgba(45,80,22,0.08);--shadow-card:0 4px 24px rgba(45,80,22,0.12);--shadow-glow:0 0 40px rgba(107,175,61,0.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+.screen-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,246,240,0.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(45,80,22,0.1);display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px}
+.screen-nav .nav-logo{width:28px;height:28px;margin-right:8px;border-radius:6px;overflow:hidden}
+.screen-nav .nav-logo svg{width:100%;height:100%}
+.screen-nav button{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 16px;border:2px solid var(--green-mid);border-radius:100px;background:transparent;color:var(--green-mid);cursor:pointer;transition:all .3s}
+.screen-nav button.active,.screen-nav button:hover{background:var(--green-mid);color:#fff}
+.screen{display:none !important;min-height:100vh;padding-top:56px}
+.screen.active{display:block !important}
+.s1{background:var(--cream)}
+.s1-header{background:linear-gradient(135deg,var(--green-deep),#3A6B1E);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.s1-brand{display:flex;align-items:center;gap:10px}
+.s1-brand svg{width:28px;height:28px}
+.s1-brand-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.s1-slogan{font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;margin-left:12px}
+.s1-right{display:flex;align-items:center;gap:16px}
+.s1-streak,.s1-xp{padding:5px 14px;border-radius:100px;font-size:12px;font-weight:600;color:#fff}
+.s1-streak{background:rgba(255,255,255,0.15)}
+.s1-xp{background:rgba(107,175,61,0.3);color:#B8E986}
+.s1-body{max-width:960px;margin:0 auto;padding:32px 24px}
+.s1-body h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--green-deep);margin-bottom:4px}
+.s1-body .sub{font-size:13px;color:var(--text-light);margin-bottom:20px}
+.s1-card{background:#fff;border-radius:16px;padding:18px 22px;margin-bottom:10px;box-shadow:var(--shadow-soft);display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;opacity:0;animation:slideIn .5s ease both;cursor:default;transition:transform .2s,box-shadow .2s}
+.s1-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card)}
+.s1-card:nth-child(1){animation-delay:.1s}.s1-card:nth-child(2){animation-delay:.2s}.s1-card:nth-child(3){animation-delay:.3s}.s1-card:nth-child(4){animation-delay:.4s}.s1-card:nth-child(5){animation-delay:.5s}
+@keyframes slideIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+.w-ring{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;position:relative}
+.w-ring svg{position:absolute;top:0;left:0;width:52px;height:52px;transform:rotate(-90deg)}
+.w-ring svg circle{fill:none;stroke-width:3.5;stroke-linecap:round}
+.w-ring .bg{stroke:var(--green-pale)}
+.w-high .fill{stroke:var(--red-accent)}.w-high .pct{color:var(--red-accent)}
+.w-med .fill{stroke:var(--orange-warm)}.w-med .pct{color:var(--orange-warm)}
+.w-low .fill{stroke:var(--green-mid)}.w-low .pct{color:var(--green-mid)}
+.pct{position:relative;z-index:1}
+.s1-info .name{font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:3px}
+.s1-info .course{font-size:12px;color:var(--text-light);margin-bottom:6px}
+.wbar{height:6px;background:var(--green-pale);border-radius:3px;overflow:hidden;max-width:200px}
+.wbar-fill{height:100%;border-radius:3px;animation:barG 1s ease both}
+@keyframes barG{from{width:0}}
+.s1-due{text-align:right;font-size:13px;color:var(--text-mid)}
+.s1-due strong{display:block;font-size:14px;color:var(--text-dark);font-weight:600}
+.s1-due .urg{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;margin-top:4px;display:inline-block}
+.urg-h{background:#FDE8E3;color:var(--red-accent)}.urg-m{background:#FDF0DC;color:var(--orange-warm)}.urg-l{background:var(--green-pale);color:var(--green-mid)}
+.s1-hours{max-width:960px;margin:24px auto 0;padding:0 24px}
+.s1-hours-card{background:#fff;border-radius:16px;padding:20px 24px;box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:24px}
+.s1-hours h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--green-deep)}
+.s1-hours .hours-val{font-size:32px;font-weight:700;color:var(--green-deep);font-family:'Playfair Display',serif}
+.s1-hours .hours-sub{font-size:12px;color:var(--text-light)}
+.hours-bar-wrap{flex:1}
+.hours-bar{height:10px;background:var(--green-pale);border-radius:5px;overflow:hidden}
+.hours-fill{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--green-light));border-radius:5px;width:0;animation:hFill 2s ease 1s both}
+@keyframes hFill{to{width:62%}}
+.hours-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--text-light)}
+.s2{background:linear-gradient(180deg,#F5F9F0,var(--cream))}
+.s2-wrap{max-width:900px;margin:0 auto;padding:40px 24px;text-align:center}
+.s2-wrap h2{font-family:'Playfair Display',serif;font-size:28px;color:var(--green-deep);margin-bottom:6px}
+.s2-wrap .sub{font-size:14px;color:var(--text-mid);margin-bottom:32px}
+.timer-display{font-family:'Playfair Display',serif;font-size:72px;font-weight:700;color:var(--green-deep);margin-bottom:8px;letter-spacing:2px}
+.timer-label{font-size:13px;color:var(--text-light);margin-bottom:24px}
+.timer-controls{display:flex;justify-content:center;gap:12px;margin-bottom:40px}
+.timer-controls button{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:10px 28px;border-radius:100px;border:none;cursor:pointer;transition:all .3s}
+.btn-start{background:var(--green-deep);color:#fff}.btn-start:hover{background:var(--green-mid)}
+.btn-reset{background:var(--green-pale);color:var(--green-deep)}.btn-reset:hover{background:#d4e8c4}
+.milestones{display:flex;justify-content:center;gap:16px;margin-bottom:40px}
+.milestone{width:140px;padding:20px 12px;background:#fff;border-radius:20px;box-shadow:var(--shadow-soft);text-align:center;transition:all .4s;position:relative;overflow:hidden}
+.milestone.unlocked{border:2px solid var(--green-light);box-shadow:var(--shadow-glow)}
+.milestone.locked{opacity:0.5;filter:grayscale(0.4)}
+.milestone .m-hours{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--green-deep);margin-bottom:6px}
+.milestone .m-animal{font-size:40px;line-height:1;margin-bottom:8px;transition:transform .4s}
+.milestone.unlocked .m-animal{animation:animalBounce .6s ease}
+@keyframes animalBounce{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+.milestone .m-name{font-size:12px;font-weight:600;color:var(--text-mid)}
+.milestone .m-lock{position:absolute;top:8px;right:8px;font-size:14px}
+.forest-scene{position:relative;width:100%;max-width:700px;height:340px;margin:0 auto;background:linear-gradient(180deg,#D4E8C4 0%,#C4DCAF 60%,#A8C890 100%);border-radius:24px;overflow:hidden;box-shadow:var(--shadow-card)}
+.forest-ground{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(180deg,#8B7355,#6B5D3F);border-radius:0 0 24px 24px}
+.forest-grass{position:absolute;bottom:70px;left:0;right:0;height:30px;background:linear-gradient(180deg,transparent,#7BAF5A)}
+.f-tree{position:absolute;bottom:70px;left:50%;transform:translateX(-50%)}
+.f-trunk{width:24px;height:100px;background:linear-gradient(90deg,var(--brown-trunk),#7D5230);border-radius:4px;margin:0 auto}
+.f-canopy{position:absolute;bottom:80px;left:50%;transform:translateX(-50%)}
+.f-canopy-l{border-radius:50%;position:absolute}
+.fc1{width:120px;height:100px;background:#4A9C28;bottom:0;left:-60px}
+.fc2{width:100px;height:85px;background:#5AAF35;bottom:15px;left:-50px}
+.fc3{width:80px;height:70px;background:#6BC23E;bottom:25px;left:-40px}
+.fc4{width:50px;height:45px;background:#7DD44F;bottom:35px;left:-25px}
+.f-animal{position:absolute;bottom:75px;font-size:32px;transition:all .6s;opacity:0;transform:translateY(10px)}
+.f-animal.visible{opacity:1;transform:translateY(0)}
+.f-bird{left:52%;bottom:200px;font-size:24px}
+.f-rabbit{left:25%;bottom:75px}
+.f-deer{right:20%;bottom:75px;font-size:38px}
+.f-fox{left:18%;bottom:75px}
+.f-squirrel{left:48%;bottom:170px;font-size:22px}
+.s3{background:linear-gradient(180deg,#E8F4E0,#D4E8C4)}
+.s3-wrap{max-width:800px;margin:0 auto;padding:40px 24px;text-align:center}
+.s3-wrap h2{font-family:'Playfair Display',serif;font-size:28px;color:var(--green-deep);margin-bottom:6px}
+.s3-wrap .sub{font-size:14px;color:var(--text-mid);margin-bottom:16px}
+.s3-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:24px}
+.s3-logo svg{width:36px;height:36px;border-radius:8px}
+.s3-logo span{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--green-deep)}
+.tree-stage-display{display:flex;justify-content:center;gap:32px;margin-bottom:32px}
+.stage-info{text-align:center}
+.stage-info .label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--green-mid);font-weight:700}
+.stage-info .value{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--green-deep)}
+.stage-info .value.sm{font-size:20px}
+.xp-bar-area{max-width:500px;margin:0 auto 32px}
+.xp-bar-outer{height:12px;background:rgba(255,255,255,0.5);border-radius:6px;overflow:hidden}
+.xp-bar-inner{height:100%;background:linear-gradient(90deg,var(--green-mid),var(--green-light));border-radius:6px;transition:width 1.5s ease}
+.xp-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--text-mid)}
+.tree-svg-wrap{width:320px;height:380px;margin:0 auto}
+.tree-svg-wrap svg{width:100%;height:100%}
+.growth-controls{display:flex;justify-content:center;gap:12px;margin-top:24px}
+.growth-controls button{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px 24px;border-radius:100px;border:2px solid var(--green-mid);background:transparent;color:var(--green-mid);cursor:pointer;transition:all .3s}
+.growth-controls button:hover,.growth-controls button.active{background:var(--green-mid);color:#fff}
+.stage-badges{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.stage-badge{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.5);color:var(--text-mid);transition:all .3s}
+.stage-badge.active{background:var(--green-deep);color:#fff}
+.s4{background:linear-gradient(180deg,var(--green-deep),#1A3A0B);min-height:100vh;display:flex;align-items:center;justify-content:center}
+.s4-wrap{text-align:center;padding:40px 24px;width:100%;max-width:900px}
+.s4-wrap h2{font-family:'Playfair Display',serif;font-size:32px;color:#fff;margin-bottom:8px}
+.s4-wrap .sub{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px}
+.chop-scene{position:relative;width:600px;height:420px;margin:0 auto 24px;background:radial-gradient(ellipse at 50% 90%,#2A5A14,#1A3A0B);border-radius:24px;overflow:hidden}
+.chop-ground{position:absolute;bottom:0;left:0;right:0;height:70px;background:linear-gradient(180deg,#5A4A2A,#4A3A1A);border-radius:0 0 24px 24px}
+.chop-tree-wrap{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);transition:transform 1.5s ease,opacity .5s ease;transform-origin:bottom center}
+.chop-tree-wrap.falling{transform:translateX(-50%) rotate(85deg)}
+.chop-tree-wrap.fallen{opacity:0}
+.chop-stump{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .5s}
+.chop-stump.visible{opacity:1}
+.lj-character{position:absolute;bottom:55px;right:80px;transition:all .3s}
+.lj-character.chopping{animation:ljSwing .35s ease infinite alternate}
+@keyframes ljSwing{0%{transform:rotate(-15deg) translateY(0)}100%{transform:rotate(8deg) translateY(-5px)}}
+.chop-sparks{position:absolute;bottom:160px;left:46%;opacity:0;font-size:28px;pointer-events:none;transition:all .2s}
+.chop-sparks.show{opacity:1;animation:sparkBurst .3s ease}
+@keyframes sparkBurst{0%{transform:scale(0.3)}50%{transform:scale(1.6)}100%{transform:scale(1)}}
+.chop-progress{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
+.chop-pip{width:24px;height:8px;border-radius:4px;background:rgba(255,255,255,0.15);transition:all .3s}
+.chop-pip.hit{background:var(--orange-warm)}
+.chop-btn{font-family:'DM Sans',sans-serif;font-size:16px;font-weight:700;padding:14px 36px;border-radius:100px;border:none;background:var(--orange-warm);color:#fff;cursor:pointer;transition:all .3s;margin-bottom:24px}
+.chop-btn:hover{background:#E09530;transform:scale(1.05)}
+.chop-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.log-container{opacity:0;transform:translateY(20px);transition:all .8s ease;pointer-events:none;margin:0 auto;max-width:500px}
+.log-container.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.log-top{height:40px;background:linear-gradient(180deg,var(--brown-trunk),#7D5230);border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:center}
+.log-top span{color:rgba(255,255,255,0.7);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px}
+.scroll-body{background:linear-gradient(160deg,#FDFBF7,#F5F0E6);border-radius:0 0 16px 16px;overflow:hidden;max-height:0;transition:max-height 1.5s ease;padding:0 28px}
+.scroll-body.unrolled{max-height:600px;padding:28px}
+.sr-header{text-align:center;margin-bottom:20px}
+.sr-header .sem{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--green-mid);font-weight:700}
+.sr-header h3{font-family:'Playfair Display',serif;font-size:24px;color:var(--green-deep)}
+.sr-header .user{font-size:13px;color:var(--text-mid)}
+.sr-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+.sr-stat{background:#fff;border-radius:14px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(45,80,22,0.06)}
+.sr-stat .sr-icon{font-size:18px;margin-bottom:2px}
+.sr-stat .sr-num{font-size:22px;font-weight:700;color:var(--green-deep)}
+.sr-stat .sr-label{font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px}
+.sr-badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.sr-badge{background:var(--green-pale);border:1.5px solid rgba(74,124,46,0.2);border-radius:100px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--green-deep)}
+.new-semester{text-align:center;padding:12px;font-family:'Playfair Display',serif;font-size:16px;color:var(--green-deep);font-style:italic}
+.s5{background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center}
+.s5-wrap{text-align:center;padding:60px 24px;max-width:520px;width:100%}
+.s5-logo{width:80px;height:80px;margin:0 auto 20px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-card)}
+.s5-logo svg{width:100%;height:100%}
+.s5-wrap h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--green-deep);margin-bottom:8px}
+.s5-wrap .tagline{font-size:13px;text-transform:uppercase;letter-spacing:4px;color:var(--green-mid);font-weight:600;margin-bottom:28px}
+.s5-wrap .desc{font-size:17px;line-height:1.7;color:var(--text-mid);margin-bottom:36px}
+.s5-form{display:flex;gap:0;background:#fff;border-radius:16px;border:2px solid var(--green-pale);overflow:hidden;transition:all .3s}
+.s5-form:focus-within{border-color:var(--green-mid);box-shadow:0 4px 20px rgba(74,124,46,0.12)}
+.s5-form input{flex:1;padding:16px 20px;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text-dark);background:transparent}
+.s5-form input::placeholder{color:var(--text-light)}
+.s5-form button{padding:16px 28px;background:var(--green-deep);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background .3s;white-space:nowrap}
+.s5-form button:hover{background:var(--green-mid)}
+.s5-note{font-size:13px;color:var(--text-light);margin-top:10px}
+.s5-success{display:none;padding:20px}
+.s5-success .check{width:48px;height:48px;background:var(--green-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px}
+.s5-success h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--green-deep);margin-bottom:6px}
+.s5-success p{font-size:14px;color:var(--text-mid)}
+.s5-footer{margin-top:40px;font-size:13px;color:var(--text-light)}
+</style>
+</head>
+<body>
+<div class="screen-nav">
+  <div class="nav-logo"><svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="680" rx="80" fill="#2D5016"/><ellipse cx="340" cy="530" rx="130" ry="20" fill="#1A3A0B" opacity=".4"/><rect x="324" y="380" width="32" height="130" rx="5" fill="#6B4423"/><line x1="324" y1="440" x2="302" y2="418" stroke="#6B4423" stroke-width="7" stroke-linecap="round"/><line x1="356" y1="415" x2="376" y2="395" stroke="#6B4423" stroke-width="6" stroke-linecap="round"/><ellipse cx="340" cy="240" rx="145" ry="125" fill="#3D8B1E"/><ellipse cx="340" cy="250" rx="135" ry="115" fill="#4A9C28"/><ellipse cx="340" cy="165" rx="78" ry="68" fill="#5AAF35"/><ellipse cx="340" cy="185" rx="62" ry="52" fill="#6BC23E"/><ellipse cx="340" cy="140" rx="36" ry="30" fill="#7DD44F"/><ellipse cx="335" cy="128" rx="22" ry="19" fill="#8FE060"/></svg></div>
+  <button class="active" onclick="go(0)">Dashboard</button>
+  <button onclick="go(1)">Study Tracker</button>
+  <button onclick="go(2)">Tree Growth</button>
+  <button onclick="go(3)">Lumberjack</button>
+  <button onclick="go(4)">Join Waitlist</button>
+</div>
+<div class="screen s1 active" id="sc0">
+  <div class="s1-header"><div style="display:flex;align-items:center"><div class="s1-brand"><svg viewBox="0 0 28 28" fill="none"><path d="M14 3L8 11h4l-3 6h3l-4 8h12l-4-8h3l-3-6h4L14 3z" fill="#6BC23E"/><rect x="12.5" y="21" width="3" height="5" rx="1" fill="#8B6914"/></svg><span class="s1-brand-name">Sequoia</span></div><span class="s1-slogan">Grow through every semester</span></div><div class="s1-right"><span class="s1-streak">&#128293; 12 day streak</span><span class="s1-xp">1,840 XP</span></div></div>
+  <div class="s1-body"><h2>Your Priorities</h2><p class="sub">Sorted by grade impact — not just due date</p>
+    <div class="s1-card"><div class="w-ring w-high"><svg viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="22"/><circle class="fill" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="41.5"/></svg><span class="pct">30%</span></div><div class="s1-info"><div class="name">Midterm Exam</div><div class="course">CHEM 201 — Organic Chemistry</div><div class="wbar"><div class="wbar-fill" style="width:100%;background:var(--red-accent)"></div></div></div><div class="s1-due"><strong>Thu, Apr 3</strong><span class="urg urg-h">2 days</span></div></div>
+    <div class="s1-card"><div class="w-ring w-med"><svg viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="22"/><circle class="fill" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="69.1"/></svg><span class="pct">20%</span></div><div class="s1-info"><div class="name">Research Paper Draft</div><div class="course">ENG 201 — Advanced Composition</div><div class="wbar"><div class="wbar-fill" style="width:66%;background:var(--orange-warm)"></div></div></div><div class="s1-due"><strong>Fri, Apr 4</strong><span class="urg urg-m">3 days</span></div></div>
+    <div class="s1-card"><div class="w-ring w-low"><svg viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="22"/><circle class="fill" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="96.7"/></svg><span class="pct">10%</span></div><div class="s1-info"><div class="name">Lab Worksheet #7</div><div class="course">BIO 110 — General Biology</div><div class="wbar"><div class="wbar-fill" style="width:33%;background:var(--green-mid)"></div></div></div><div class="s1-due"><strong>Fri, Apr 4</strong><span class="urg urg-m">3 days</span></div></div>
+    <div class="s1-card"><div class="w-ring w-low"><svg viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="22"/><circle class="fill" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="124.4"/></svg><span class="pct">5%</span></div><div class="s1-info"><div class="name">Reading Quiz: Week 8</div><div class="course">PSY 100 — Intro to Psychology</div><div class="wbar"><div class="wbar-fill" style="width:16%;background:var(--green-mid)"></div></div></div><div class="s1-due"><strong>Fri, Apr 4</strong><span class="urg urg-l">3 days</span></div></div>
+    <div class="s1-card"><div class="w-ring w-low"><svg viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="22"/><circle class="fill" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="131.3"/></svg><span class="pct">2%</span></div><div class="s1-info"><div class="name">Discussion Post: Chapter 4</div><div class="course">SOC 101 — Intro to Sociology</div><div class="wbar"><div class="wbar-fill" style="width:7%;background:var(--green-mid)"></div></div></div><div class="s1-due"><strong>Thu, Apr 3</strong><span class="urg urg-l">2 days</span></div></div>
+  </div>
+  <div class="s1-hours"><div class="s1-hours-card"><div><h3>Study Hours This Week</h3><div class="hours-val">6.2h</div><div class="hours-sub">of 10h weekly goal</div></div><div class="hours-bar-wrap"><div class="hours-bar"><div class="hours-fill"></div></div><div class="hours-labels"><span>0h</span><span>5h</span><span>10h</span></div></div></div></div>
+</div>
+<div class="screen s2" id="sc1">
+  <div class="s2-wrap"><h2>Study Session</h2><p class="sub">Every hour unlocks a new companion for your forest</p>
+    <div class="timer-display" id="timer">00:00:00</div><div class="timer-label">Focus time this session</div>
+    <div class="timer-controls"><button class="btn-start" id="timerBtn" onclick="toggleTimer()">Start Session</button><button class="btn-reset" onclick="resetTimer()">Reset</button></div>
+    <div class="milestones">
+      <div class="milestone locked" id="m1"><div class="m-lock">&#128274;</div><div class="m-hours">1 hour</div><div class="m-animal">&#128038;</div><div class="m-name">Bird</div></div>
+      <div class="milestone locked" id="m2"><div class="m-lock">&#128274;</div><div class="m-hours">3 hours</div><div class="m-animal">&#128048;</div><div class="m-name">Rabbit</div></div>
+      <div class="milestone locked" id="m3"><div class="m-lock">&#128274;</div><div class="m-hours">5 hours</div><div class="m-animal">&#129420;</div><div class="m-name">Deer</div></div>
+      <div class="milestone locked" id="m4"><div class="m-lock">&#128274;</div><div class="m-hours">7 hours</div><div class="m-animal">&#129418;</div><div class="m-name">Fox</div></div>
+      <div class="milestone locked" id="m5"><div class="m-lock">&#128274;</div><div class="m-hours">10 hours</div><div class="m-animal">&#128063;</div><div class="m-name">Squirrel</div></div>
+    </div>
+    <div class="forest-scene"><div class="forest-grass"></div><div class="forest-ground"></div>
+      <div class="f-tree"><div class="f-trunk"></div><div class="f-canopy"><div class="f-canopy-l fc1"></div><div class="f-canopy-l fc2"></div><div class="f-canopy-l fc3"></div><div class="f-canopy-l fc4"></div></div></div>
+      <div class="f-animal f-bird" id="fa-bird">&#128038;</div><div class="f-animal f-rabbit" id="fa-rabbit">&#128048;</div><div class="f-animal f-deer" id="fa-deer">&#129420;</div><div class="f-animal f-fox" id="fa-fox">&#129418;</div><div class="f-animal f-squirrel" id="fa-squirrel">&#128063;</div>
+    </div>
+  </div>
+</div>
+<div class="screen s3" id="sc2">
+  <div class="s3-wrap">
+    <div class="s3-logo"><svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="680" rx="80" fill="#2D5016"/><ellipse cx="340" cy="530" rx="130" ry="20" fill="#1A3A0B" opacity=".4"/><rect x="324" y="380" width="32" height="130" rx="5" fill="#6B4423"/><line x1="324" y1="440" x2="302" y2="418" stroke="#6B4423" stroke-width="7" stroke-linecap="round"/><line x1="356" y1="415" x2="376" y2="395" stroke="#6B4423" stroke-width="6" stroke-linecap="round"/><ellipse cx="340" cy="240" rx="145" ry="125" fill="#3D8B1E"/><ellipse cx="340" cy="250" rx="135" ry="115" fill="#4A9C28"/><ellipse cx="340" cy="165" rx="78" ry="68" fill="#5AAF35"/><ellipse cx="340" cy="185" rx="62" ry="52" fill="#6BC23E"/><ellipse cx="340" cy="140" rx="36" ry="30" fill="#7DD44F"/><ellipse cx="335" cy="128" rx="22" ry="19" fill="#8FE060"/></svg><span>Sequoia</span></div>
+    <h2>Watch Your Tree Grow</h2><p class="sub">Complete assignments and study sessions to earn XP and level up</p>
+    <div class="tree-stage-display"><div class="stage-info"><div class="label">Level</div><div class="value" id="treeLevel">1</div></div><div class="stage-info"><div class="label">Stage</div><div class="value sm" id="treeStageName">Seedling</div></div><div class="stage-info"><div class="label">Total XP</div><div class="value" id="treeXP">0</div></div></div>
+    <div class="xp-bar-area"><div class="xp-bar-outer"><div class="xp-bar-inner" id="xpBar" style="width:0%"></div></div><div class="xp-labels"><span id="xpCurrent">0 XP</span><span id="xpNext">100 XP</span></div></div>
+    <div class="tree-svg-wrap" id="treeSvgWrap"></div>
+    <div class="growth-controls"><button onclick="setStage(0)" class="active" id="stgBtn0">Seedling</button><button onclick="setStage(1)" id="stgBtn1">Sapling</button><button onclick="setStage(2)" id="stgBtn2">Grove Tree</button><button onclick="setStage(3)" id="stgBtn3">Ancient Sequoia</button></div>
+    <div class="stage-badges"><div class="stage-badge active" id="sb0">Lv 1-10</div><div class="stage-badge" id="sb1">Lv 11-25</div><div class="stage-badge" id="sb2">Lv 26-45</div><div class="stage-badge" id="sb3">Lv 46-50</div></div>
+  </div>
+</div>
+<div class="screen s4" id="sc3">
+  <div class="s4-wrap">
+    <h2 style="color:#fff">Semester Complete</h2><p class="sub" style="color:rgba(255,255,255,0.5)">Time to harvest your Sequoia and start fresh</p>
+    <div class="chop-scene">
+      <div class="chop-ground"></div>
+      <div class="chop-tree-wrap" id="chopTreeWrap">
+        <svg width="160" height="300" viewBox="0 0 160 300"><rect x="68" y="140" width="24" height="160" rx="4" fill="#6B4423"/><rect x="73" y="150" width="8" height="130" rx="2" fill="#7D5230" opacity="0.5"/><line x1="68" y1="220" x2="48" y2="200" stroke="#6B4423" stroke-width="6" stroke-linecap="round"/><line x1="92" y1="195" x2="110" y2="178" stroke="#6B4423" stroke-width="5" stroke-linecap="round"/><ellipse cx="80" cy="100" rx="72" ry="62" fill="#3D8B1E"/><ellipse cx="80" cy="105" rx="65" ry="55" fill="#4A9C28"/><ellipse cx="60" cy="80" rx="45" ry="38" fill="#5AAF35"/><ellipse cx="100" cy="85" rx="40" ry="34" fill="#4A9C28"/><ellipse cx="80" cy="65" rx="38" ry="32" fill="#6BC23E"/><ellipse cx="75" cy="52" rx="25" ry="22" fill="#7DD44F"/><ellipse cx="85" cy="45" rx="18" ry="15" fill="#8FE060"/></svg>
+      </div>
+      <div class="chop-stump" id="chopStump"><svg width="50" height="30" viewBox="0 0 50 30"><rect x="5" y="0" width="40" height="25" rx="4" fill="#6B4423"/><ellipse cx="25" cy="5" rx="20" ry="8" fill="#7D5230"/><circle cx="25" cy="5" r="6" fill="none" stroke="#5A3A1A" stroke-width="1" opacity="0.5"/></svg></div>
+      <div class="lj-character" id="ljChar">
+        <svg width="80" height="120" viewBox="0 0 80 120"><circle cx="40" cy="18" r="14" fill="#F4C29A"/><rect x="36" y="14" width="8" height="6" rx="2" fill="#5A3A1A"/><rect x="30" y="8" width="20" height="12" rx="4" fill="#C75B3A"/><rect x="28" y="32" width="24" height="40" rx="4" fill="#C75B3A"/><rect x="28" y="32" width="24" height="15" rx="4" fill="#D4882B"/><rect x="30" y="72" width="8" height="35" rx="3" fill="#3A5A2A"/><rect x="42" y="72" width="8" height="35" rx="3" fill="#3A5A2A"/><rect x="26" y="107" width="12" height="8" rx="2" fill="#4A2F17"/><rect x="42" y="107" width="12" height="8" rx="2" fill="#4A2F17"/><line x1="52" y1="40" x2="72" y2="20" stroke="#8B6914" stroke-width="3" stroke-linecap="round"/><rect x="66" y="8" width="12" height="16" rx="2" fill="#888" transform="rotate(15 72 16)"/></svg>
+      </div>
+      <div class="chop-sparks" id="chopSparks">&#10024;&#10024;</div>
+    </div>
+    <div class="chop-progress"><div class="chop-pip" id="pip0"></div><div class="chop-pip" id="pip1"></div><div class="chop-pip" id="pip2"></div><div class="chop-pip" id="pip3"></div><div class="chop-pip" id="pip4"></div></div>
+    <button class="chop-btn" id="chopBtn" onclick="chopTree()">&#129683; Chop Down Your Tree</button>
+    <div class="log-container" id="logContainer">
+      <div class="log-top"><span>&#127794; Semester Log</span></div>
+      <div class="scroll-body" id="scrollBody">
+        <div class="sr-header"><div class="sem">Spring 2026 Complete</div><h3>Semester Wrapped</h3><div class="user">@yourusername</div></div>
+        <div class="sr-grid">
+          <div class="sr-stat"><div class="sr-icon">&#9889;</div><div class="sr-num">12,480</div><div class="sr-label">Total XP</div></div>
+          <div class="sr-stat"><div class="sr-icon">&#9200;</div><div class="sr-num">94h</div><div class="sr-label">Study Hours</div></div>
+          <div class="sr-stat"><div class="sr-icon">&#9989;</div><div class="sr-num">67</div><div class="sr-label">Completed</div></div>
+          <div class="sr-stat"><div class="sr-icon">&#128293;</div><div class="sr-num">34</div><div class="sr-label">Longest Streak</div></div>
+          <div class="sr-stat"><div class="sr-icon">&#127942;</div><div class="sr-num">92%</div><div class="sr-label">On-Time Rate</div></div>
+          <div class="sr-stat"><div class="sr-icon">&#128171;</div><div class="sr-num">Orgo II</div><div class="sr-label">Biggest Grind</div></div>
+        </div>
+        <div class="sr-badges"><span class="sr-badge">&#127793; Early Bird</span><span class="sr-badge">&#128170; Iron Streak</span><span class="sr-badge">&#127775; Night Owl</span><span class="sr-badge">&#129351; GPA Guardian</span></div>
+        <div class="new-semester">&#127793; A new seedling awaits next semester...</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="screen s5" id="sc4">
+  <div class="s5-wrap">
+    <div class="s5-logo"><svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="680" rx="80" fill="#2D5016"/><ellipse cx="340" cy="530" rx="130" ry="20" fill="#1A3A0B" opacity=".4"/><rect x="324" y="380" width="32" height="130" rx="5" fill="#6B4423"/><line x1="324" y1="440" x2="302" y2="418" stroke="#6B4423" stroke-width="7" stroke-linecap="round"/><line x1="356" y1="415" x2="376" y2="395" stroke="#6B4423" stroke-width="6" stroke-linecap="round"/><ellipse cx="340" cy="240" rx="145" ry="125" fill="#3D8B1E"/><ellipse cx="340" cy="250" rx="135" ry="115" fill="#4A9C28"/><ellipse cx="340" cy="165" rx="78" ry="68" fill="#5AAF35"/><ellipse cx="340" cy="185" rx="62" ry="52" fill="#6BC23E"/><ellipse cx="340" cy="140" rx="36" ry="30" fill="#7DD44F"/><ellipse cx="335" cy="128" rx="22" ry="19" fill="#8FE060"/></svg></div>
+    <h1>Sequoia</h1><p class="tagline">Grow through every semester</p>
+    <p class="desc">The study app that connects to your Canvas, shows you what actually matters for your grade, and rewards every session with a growing tree.</p>
+    <div class="s5-form" id="s5form"><input type="email" id="s5email" placeholder="Enter your email"><button onclick="submitWaitlist()">Join Waitlist</button></div>
+    <p class="s5-note">Be first to try Sequoia. No spam, ever.</p>
+    <div class="s5-success" id="s5success"><div class="check">&#127793;</div><h3>You're on the list</h3><p>We'll let you know as soon as Sequoia is ready.</p></div>
+    <div class="s5-footer">Built by a student, for students.</div>
+  </div>
+</div>
+<script>
+function go(i){document.querySelectorAll('.screen').forEach(function(s,j){s.classList.toggle('active',j===i)});document.querySelectorAll('.screen-nav button').forEach(function(b,j){b.classList.toggle('active',j===i)})}
+var timerInterval=null,seconds=0,running=false;
+var thresholds=[3600,10800,18000,25200,36000];
+var animalIds=['fa-bird','fa-rabbit','fa-deer','fa-fox','fa-squirrel'];
+var milestoneIds=['m1','m2','m3','m4','m5'];
+function toggleTimer(){if(running){running=false;clearInterval(timerInterval);document.getElementById('timerBtn').textContent='Resume'}else{running=true;document.getElementById('timerBtn').textContent='Pause';timerInterval=setInterval(function(){seconds++;updateTimer()},1000)}}
+function resetTimer(){running=false;clearInterval(timerInterval);seconds=0;updateTimer();document.getElementById('timerBtn').textContent='Start Session';animalIds.forEach(function(id){document.getElementById(id).classList.remove('visible')});milestoneIds.forEach(function(id){var m=document.getElementById(id);m.classList.add('locked');m.classList.remove('unlocked');m.querySelector('.m-lock').innerHTML='&#128274;'})}
+function updateTimer(){var h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;document.getElementById('timer').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');thresholds.forEach(function(t,i){if(seconds>=t){var ml=document.getElementById(milestoneIds[i]);if(ml.classList.contains('locked')){ml.classList.remove('locked');ml.classList.add('unlocked');ml.querySelector('.m-lock').innerHTML='&#10024;';document.getElementById(animalIds[i]).classList.add('visible')}}})}
+window.demoTime=function(h){seconds=h*3600;updateTimer();console.log('Timer jumped to '+h+' hours. Animals unlocked up to this point.')};
+var treeSVGs=['<svg viewBox="0 0 320 380"><ellipse cx="160" cy="355" rx="80" ry="15" fill="#6B5D3F" opacity="0.4"/><rect x="156" y="300" width="8" height="55" rx="3" fill="#6B4423"/><ellipse cx="160" cy="290" rx="20" ry="18" fill="#5AAF35"/><ellipse cx="160" cy="282" rx="14" ry="12" fill="#6BC23E"/><ellipse cx="158" cy="276" rx="8" ry="7" fill="#7DD44F"/></svg>','<svg viewBox="0 0 320 380"><ellipse cx="160" cy="355" rx="90" ry="18" fill="#6B5D3F" opacity="0.4"/><rect x="152" y="250" width="16" height="105" rx="4" fill="#6B4423"/><rect x="155" y="260" width="6" height="80" rx="2" fill="#7D5230" opacity="0.4"/><line x1="152" y1="300" x2="132" y2="282" stroke="#6B4423" stroke-width="5" stroke-linecap="round"/><line x1="168" y1="280" x2="185" y2="265" stroke="#6B4423" stroke-width="4" stroke-linecap="round"/><ellipse cx="160" cy="210" rx="55" ry="48" fill="#4A9C28"/><ellipse cx="160" cy="215" rx="48" ry="42" fill="#5AAF35"/><ellipse cx="148" cy="195" rx="30" ry="26" fill="#5AAF35"/><ellipse cx="172" cy="200" rx="28" ry="24" fill="#4A9C28"/><ellipse cx="160" cy="185" rx="25" ry="22" fill="#6BC23E"/><ellipse cx="158" cy="177" rx="15" ry="13" fill="#7DD44F"/></svg>','<svg viewBox="0 0 320 380"><ellipse cx="160" cy="355" rx="100" ry="20" fill="#6B5D3F" opacity="0.4"/><rect x="148" y="210" width="24" height="145" rx="5" fill="#6B4423"/><rect x="153" y="220" width="8" height="120" rx="3" fill="#7D5230" opacity="0.4"/><line x1="148" y1="280" x2="118" y2="258" stroke="#6B4423" stroke-width="6" stroke-linecap="round"/><line x1="172" y1="255" x2="198" y2="235" stroke="#6B4423" stroke-width="5" stroke-linecap="round"/><line x1="172" y1="305" x2="195" y2="292" stroke="#5A3A1A" stroke-width="4" stroke-linecap="round"/><ellipse cx="160" cy="150" rx="90" ry="78" fill="#3D8B1E"/><ellipse cx="160" cy="158" rx="82" ry="70" fill="#4A9C28"/><ellipse cx="130" cy="125" rx="55" ry="48" fill="#4A9C28"/><ellipse cx="190" cy="132" rx="50" ry="44" fill="#3D8B1E"/><ellipse cx="160" cy="110" rx="48" ry="42" fill="#5AAF35"/><ellipse cx="140" cy="135" rx="40" ry="35" fill="#5AA832"/><ellipse cx="180" cy="140" rx="38" ry="33" fill="#4A9C28"/><ellipse cx="160" cy="100" rx="38" ry="32" fill="#6BC23E"/><ellipse cx="150" cy="88" rx="25" ry="22" fill="#6BC23E"/><ellipse cx="170" cy="90" rx="24" ry="20" fill="#7DD44F"/><ellipse cx="160" cy="80" rx="18" ry="15" fill="#7DD44F"/><ellipse cx="158" cy="74" rx="10" ry="9" fill="#8FE060"/></svg>','<svg viewBox="0 0 320 380"><ellipse cx="160" cy="358" rx="110" ry="22" fill="#6B5D3F" opacity="0.5"/><rect x="143" y="180" width="34" height="178" rx="6" fill="#6B4423"/><rect x="150" y="190" width="12" height="150" rx="4" fill="#7D5230" opacity="0.4"/><line x1="143" y1="260" x2="108" y2="235" stroke="#6B4423" stroke-width="8" stroke-linecap="round"/><line x1="177" y1="230" x2="208" y2="205" stroke="#6B4423" stroke-width="7" stroke-linecap="round"/><line x1="177" y1="290" x2="210" y2="275" stroke="#5A3A1A" stroke-width="5" stroke-linecap="round"/><line x1="143" y1="320" x2="115" y2="308" stroke="#5A3A1A" stroke-width="5" stroke-linecap="round"/><ellipse cx="160" cy="115" rx="115" ry="100" fill="#3D8B1E"/><ellipse cx="160" cy="125" rx="105" ry="90" fill="#4A9C28"/><ellipse cx="120" cy="85" rx="65" ry="58" fill="#4A9C28"/><ellipse cx="200" cy="92" rx="60" ry="54" fill="#3D8B1E"/><ellipse cx="160" cy="70" rx="58" ry="50" fill="#5AAF35"/><ellipse cx="130" cy="100" rx="50" ry="44" fill="#5AA832"/><ellipse cx="190" cy="105" rx="46" ry="40" fill="#4A9C28"/><ellipse cx="160" cy="60" rx="48" ry="40" fill="#6BC23E"/><ellipse cx="140" cy="50" rx="32" ry="28" fill="#6BC23E"/><ellipse cx="180" cy="52" rx="30" ry="26" fill="#7DD44F"/><ellipse cx="160" cy="40" rx="24" ry="20" fill="#7DD44F"/><ellipse cx="157" cy="32" rx="15" ry="13" fill="#8FE060"/><circle cx="120" cy="80" r="4" fill="#8FE060" opacity="0.5"/><circle cx="200" cy="95" r="3.5" fill="#8FE060" opacity="0.4"/></svg>'];
+var stageData=[{name:'Seedling',level:1,xp:0},{name:'Sapling',level:15,xp:1200},{name:'Grove Tree',level:32,xp:4800},{name:'Ancient Sequoia',level:48,xp:12480}];
+function setStage(idx){var st=stageData[idx];document.getElementById('treeLevel').textContent=st.level;document.getElementById('treeStageName').textContent=st.name;document.getElementById('treeXP').textContent=st.xp.toLocaleString();var pct=idx===3?96:((idx+1)/4)*80;document.getElementById('xpBar').style.width=pct+'%';document.getElementById('xpCurrent').textContent=st.xp.toLocaleString()+' XP';var nextXP=idx<3?stageData[idx+1].xp:13000;document.getElementById('xpNext').textContent=nextXP.toLocaleString()+' XP';document.getElementById('treeSvgWrap').innerHTML=treeSVGs[idx];document.querySelectorAll('.growth-controls button').forEach(function(b,j){b.classList.toggle('active',j===idx)});document.querySelectorAll('.stage-badge').forEach(function(b,j){b.classList.toggle('active',j===idx)})}
+setStage(0);
+var chopCount=0,chopped=false;
+function chopTree(){if(chopped)return;chopCount++;var lj=document.getElementById('ljChar');var sparks=document.getElementById('chopSparks');lj.classList.add('chopping');sparks.classList.add('show');sparks.style.left=(42+Math.random()*10)+'%';document.getElementById('pip'+(chopCount-1)).classList.add('hit');setTimeout(function(){sparks.classList.remove('show')},300);if(chopCount>=5){chopped=true;setTimeout(function(){lj.classList.remove('chopping')},400);document.getElementById('chopTreeWrap').classList.add('falling');document.getElementById('chopBtn').disabled=true;document.getElementById('chopBtn').textContent='Tree Harvested';setTimeout(function(){document.getElementById('chopTreeWrap').classList.add('fallen');document.getElementById('chopStump').classList.add('visible')},1500);setTimeout(function(){document.getElementById('logContainer').classList.add('visible')},2200);setTimeout(function(){document.getElementById('scrollBody').classList.add('unrolled')},2800)}else{setTimeout(function(){lj.classList.remove('chopping')},350)}}
+function submitWaitlist(){var email=document.getElementById('s5email').value.trim();if(!email||email.indexOf('@')===-1||email.indexOf('.')===-1){document.getElementById('s5email').style.outline='2px solid #C75B3A';setTimeout(function(){document.getElementById('s5email').style.outline='none'},2000);return}fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_key:'YOUR_ACCESS_KEY_HERE',email:email,subject:'New Sequoia Waitlist Signup'})});document.getElementById('s5form').style.display='none';document.querySelector('.s5-note').style.display='none';document.getElementById('s5success').style.display='block'}
+document.getElementById('s5email').addEventListener('keydown',function(e){if(e.key==='Enter')submitWaitlist()});
+</script>
+</body>
+</html>
